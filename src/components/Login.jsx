@@ -53,7 +53,6 @@ function Login() {
               onSubmit={handleSubmit}
             >
               <h2 className='text-2xl mb-4'>Login</h2>
-
               <input
                 className='mb-4 w-full p-2 border rounded'
                 placeholder='Email'
@@ -61,7 +60,6 @@ function Login() {
                 value={formData.email}
                 onChange={handleChange}
               />
-
               <input
                 className='mb-4 w-full p-2 border rounded'
                 type='password'
