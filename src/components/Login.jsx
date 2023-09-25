@@ -51,6 +51,13 @@ function Login() {
     }
   };
 
+  const handleLogout = () => {
+    // Clear login information from localStorage and reset state
+    localStorage.removeItem('loginInfo');
+    setLoggedInUser({});
+    setLoginSuccess(false);
+  };
+
   return (
     <>
       <div className='min-h-screen flex items-center justify-center bg-gray-100'>
@@ -91,8 +98,15 @@ function Login() {
           <div className='p-8 bg-white shadow-lg rounded'>
             <h2 className='text-2xl mb-4'>Login Successful!</h2>
             <p>{`You are now logged in ${loggedInUser.userName}.`}</p>
+            <button 
+             className='w-full px-4 py-2 bg-green-500 text-white rounded'
+             onClick={handleLogout}
+            >
+                Log out
+              </button>
           </div>
         )}
+        
       </div>
     </>
   );
