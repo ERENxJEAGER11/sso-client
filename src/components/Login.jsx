@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -9,6 +9,7 @@ function Login() {
     email: '',
     password: '',
   });
+  const storedLoginInfo = JSON.parse(localStorage.getItem('loginInfo'));
 
   const handleChange = (e) => {
     setFormData({
@@ -16,6 +17,17 @@ function Login() {
       [e.target.name]: e.target.value,
     });
   };
+
+  const isStringEmpty = (str) => {
+    return str === null || str === '';
+  };
+
+  useEffect(() => {
+    if (storedLoginInfo && !loginSuccess) {
+      setLoggedInUser(storedLoginInfo);
+      setLoginSuccess(true);
+    }
+  }, [storedLoginInfo, loginSuccess]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +40,7 @@ function Login() {
 
       if (response.status === 200) {
         setLoggedInUser(response.data.user);
+        localStorage.setItem('loginInfo', JSON.stringify(response.data.user));
         setLoginSuccess(true);
         console.log('Login successful', response.data.user);
       } else {
@@ -46,7 +59,7 @@ function Login() {
             Back
           </Link>
         </div>
-        {!loginSuccess ? (
+       {!loginSuccess || isStringEmpty(storedLoginInfo) ? (
           <div>
             <form
               className='p-8 bg-white shadow-lg rounded'

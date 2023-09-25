@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -15,9 +16,19 @@ function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     //server
+    try {
+       const response = await axios.post("http://localhost:3002/api/signup",{
+        username:formData.username,
+        password:formData.password,
+        email: formData.email
+       });   
+       console.log(response.data);
+    }catch(error) {
+      console.log(error);
+    }
   };
 
   return (
